@@ -1,0 +1,46 @@
+CREATE TABLE [dbo].[Autor]
+(
+	IDAutor INT NOT NULL IDENTITY PRIMARY KEY,
+	Nome VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE [dbo].[Editora]
+(
+	IDEditora INT NOT NULL IDENTITY PRIMARY KEY,
+	Nome VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE [dbo].[Livro]
+(
+	IDLivro INT NOT NULL IDENTITY PRIMARY KEY,
+	Titulo varchar(50) NOT NULL,
+	DataPublicacao DATE NOT NULL,
+	Paginas INT NOT NULL,
+	IDAutor INT NOT NULL REFERENCES dbo.Autor(IDAutor),
+	IDEditora INT NOT NULL REFERENCES dbo.Editora(IDEditora),
+	IDGenero INT NOT NULL REFERENCES dbo.Genero(IDGenero),
+	Descricao VARCHAR(MAX) NOT NULL,
+	Sinopse VARCHAR(MAX) NOT NULL,
+	Capa VARCHAR(MAX) NULL
+);
+
+CREATE TABLE [dbo].[LinkCompraLivro]
+(
+	IDLinkCompraLivro INT NOT NULL IDENTITY PRIMARY KEY,
+	IDLivro INT NOT NULL REFERENCES dbo.Livro(IDLivro),
+	Link VARCHAR(500) NOT NULL
+)
+
+CREATE TABLE [dbo].Genero 
+(
+	IDGenero INT NOT NULL IDENTITY PRIMARY KEY,
+	Descricao VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE [dbo].GeneroLivro
+(
+	IDGeneroLivro INT NOT NULL IDENTITY PRIMARY KEY,
+	IDLivro INT NOT NULL REFERENCES dbo.Livro(IDLivro),
+	IDGenero INT NOT NULL REFERENCES dbo.Genero(IDGenero)
+);

@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title *ngIf="!isSearch">
+            GBooks
+        </ion-title>
+
+        <button class="btn-search" *ngIf="!isSearch">
+            <ion-icon [name]="'search'" (click)="openSearch()"></ion-icon>
+        </button>
+        <ion-searchbar [(ngModel)]="search" *ngIf="isSearch" showCancelButton="true"
+                       (ionCancel)="openSearch()"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list *ngIf="typeVisualization === 'list'">
+        <ion-item *ngFor="let item of livros | filterCuston: search">
+            Titulo: {{item.titulo}}
+            <div class="item-note" slot="end">
+                <b>Descrição do Livro: </b>{{item.descricao}}
+            </div>
+        </ion-item>
+    </ion-list>
+    <!--
+      <div *ngIf="selectedItem" padding>
+        You navigated here from <b>{{selectedItem.title }}</b>
+      </div>
+    -->
+
+    <ion-row *ngIf="typeVisualization === 'cards'">
+        <ion-col size="12" sizeMd="3" *ngFor="let item of livros | filterCuston: search">
+            <ion-card>
+                <ion-card-header>
+                    <img [src]="item.capa" width="250" height="250">
+                </ion-card-header>
+                <ion-card-content>
+                    <div><b>Titulo: </b>{{item.titulo}}</div>
+                    <div><b>Quantidade de Páginas: </b>{{item.paginas}}</div>
+                    <div><b>Publicado em: </b>{{item.paginas | date : 'dd/MM/yyyy'}}</div>
+                    <div><b>Descrição do Livro: </b>{{item.descricao}}</div>
+                    <div><b>Sinopse: </b>{{item.descricao}}</div>
+                </ion-card-content>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+
+    <ion-fab  vertical="bottom" horizontal="end">
+        <ion-fab-button  (click)="changeTypeVisualization()">
+            <ion-icon [name]="typeVisualization === 'cards' ? 'list' : 'apps'"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

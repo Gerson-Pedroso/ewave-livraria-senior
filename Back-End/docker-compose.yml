@@ -1,0 +1,8 @@
+version: '3.6'
+
+services:
+  livro-api:
+    image: ${DOCKER_REGISTRY-}gersonlivro
+    build:
+      context: .
+      dockerfile: Gerson.Livro/Dockerfile

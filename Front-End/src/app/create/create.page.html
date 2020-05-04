@@ -1,0 +1,64 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Adicionar</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ion-item>
+            <ion-label position="stacked">Titulo:</ion-label>
+            <ion-input [name]="titulo" formControlName="titulo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Gênero:</ion-label>
+            <ion-select [placeholder]="'Selecione um gênero'">
+                <ion-select-option *ngFor="let genero of optionsGenero" [value]="genero.idGenero">{{genero.descricao}}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">Quantidade de Paginas</ion-label>
+            <ion-input [name]="paginas" formControlName="paginas" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Autor:</ion-label>
+            <ion-select [placeholder]="'Selecione um autor'" formControlName="idAutor">
+                <ion-select-option *ngFor="let autor of optionsAutor" [value]="autor.idAutor">{{autor.nome}}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Editora:</ion-label>
+            <ion-select [placeholder]="'Selecione uma editora'" formControlName="idEditora">
+                <ion-select-option *ngFor="let editora of optionsEditora" [value]="editora.idEditora">{{editora.nome}}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">Sinopse</ion-label>
+            <ion-textarea [name]="sinopse" formControlName="sinopse" type="text"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">Data de Publicação</ion-label>
+            <ion-datetime displayFormat="DD MM YYYY" placeholder="Selecione"
+                          [name]="dataPublicacao" formControlName="dataPublicacao"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">Capa</ion-label>
+            <ion-input [name]="capa" formControlName="capa" type="file" (change)="startUpload($event)"></ion-input>
+        </ion-item>
+
+        <ion-button fill="outline" type="submit" class="button-cadastrar">Cadastrar</ion-button>
+    </form>
+</ion-content>

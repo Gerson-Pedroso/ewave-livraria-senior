@@ -1,0 +1,44 @@
+version: '3.6'
+
+services:
+  livro-api:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: 'https://+:443;http://+:80'
+      ASPNETCORE_HTTPS_PORT: 44302
+      GERSON_CONNECTION_STRING: 'Server=livro-db,1433;Database=Gerson;User Id=sa;Password=P@ssw0rd;'
+    ports:
+      - "10000:80"
+      - "44302:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - livro-db
+      
+  livro-db:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: P@ssw0rd      
+      
+    ports:
+      - '1433:1433'     
+#    volumes:
+#      - 'mssql-server-data:/var/opt/mssql'
+
+  flyway:
+    image: flyway/flyway:6
+    #entrypoint: ["bash", "/flyway/bin/wait-for-it.sh", "livro-db:1433", "--", ""] 
+    command: -url='jdbc:sqlserver://livro-db:1433' -user=sa -password=P@ssw0rd -connectRetries=120 migrate
+    environment:
+      - SA_PASSWORD=P@ssw0rd
+      - ACCEPT_EULA="Y"      
+    volumes:
+      - ./sql:/flyway/sql 
+      - ./wait-for-it.sh:/flyway/bin/wait-for-it.sh
+    depends_on:
+      - livro-db
+
+#volumes:
+#  mssql-server-data:
