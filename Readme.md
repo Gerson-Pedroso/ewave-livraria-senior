@@ -14,6 +14,14 @@ Para rodar o projeto e necessario ter instalado:
 - Angular CLI
 - Docker
 
+### Back-End
+
+- para rodar back-end basta utilizar o comando docker-compose up
+
+### Front-end
+
+- para rodar o front end basta instalar os pacotes (npm install) e utilizar o comando ng serve
+
 ### Proximas Etapas
 
 - Ionic/Angular - melhorar layout e Ux
